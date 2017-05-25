@@ -67,7 +67,7 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 	return nil, errors.New("Received unknown function invocation: " + function)
 }
 
-func (t *SimpleChaincode) write(stub shim.ChaincodeStubInterface, args[] []string) ([]byte, error) {
+func (t *SimpleChaincode) write(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
 	var name, value string
 	var err error
 	fmt.Println("running write()")
@@ -104,24 +104,16 @@ func (t *SimpleChaincode) read(stub shim.ChaincodeStubInterface, args []string) 
 	var err error
 
 	if len(args) != 1 {
-		return nill, errors.New("Incorrect number of arguments. Expecting name of var to query")
+		return nil, errors.New("Incorrect number of arguments. Expecting name of var to query")
 	}
 
 	name = args[0]
 	valAsbytes, err := stub.GetState(name)
 
-	if err != null {
+	if err != nil {
 		jsonResp = "{\"Error\":\"Failed to get state for " + name + "\"}"
 		return nil, errors.New(jsonResp)
 	}
 
 	return valAsbytes, nil
-}
-
-func main() {
-	err := shim.Start(new(SimpleChaincode))
-
-	if err != nil {
-		fmt.Printf("Error starting Simple chaincode: %s", err)
-	}
 }
